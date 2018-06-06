@@ -1,0 +1,15 @@
+body {
+    background-image: url(../images/Background.jpg);
+}
+h1 {
+    color: white;
+    text-align: center;
+    padding: 7px;
+}
+.row {
+    color: white;
+    align-content: center;
+    text-align: center;
+    display: block;
+    padding: 4px;
+}
