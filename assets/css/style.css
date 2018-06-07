@@ -1,5 +1,5 @@
 body {
-    background-image: url(../images/Background.jpg);
+    background-color: black;
 }
 h1 {
     color: white;
@@ -12,4 +12,10 @@ h1 {
     text-align: center;
     display: block;
     padding: 4px;
+}
+h5 {
+    color: limegreen;
+}
+h1 {
+    color: limegreen;
 }

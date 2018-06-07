@@ -16,20 +16,25 @@
     <div class="container">
         <div class="row">
             
-            <button type="button" class="btn btn-success">Start</button>
+            <button type="button" class="btn btn-success start">Start</button>
 
         </div>
 
         <div class="row">
                 
-            <span id="timer"><h3>00:00</h3></span>
+            <span id="timer"><h3>Ready for the countdown?</h3></span>
            
         </div>
 
         <div class="row">
             
-            <span id="questions"><h3>questions</h3></span>
-    
+            <h4>Click Start to begin the trivia!</h4>
+
+            <span id="questions"></span>
+            <div id="answers"></div>
+            <button id="submit" class="btn btn-success hide">Submit Quiz</button>
+            <div id="results"></div>
+            
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
