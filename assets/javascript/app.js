@@ -42,12 +42,12 @@ const Questions = [
         answers: {
             a: "Adam Draper",b: "Tim Draper",c: "Barry Silbert", d: "Ryan X Charles"
         },
-        correctAnswer: "a"
+        correctAnswer: "b"
     },
     {//6
         question: "<h5>6. What is the name of the Bitcoin developer Satoshi handed over the reigns to?</h5>",
         answers: {
-            a: "Gavin Andreesen", b: "Marc Andreesen", c: "Mike Hearn",  d: "Greg Maxwell"
+            a: "Gavin Andresen", b: "Marc Andreesen", c: "Mike Hearn",  d: "Greg Maxwell"
         },
         correctAnswer: "a"
     },
@@ -75,7 +75,7 @@ const Questions = [
     {//10
         question: "<h5>10. Who is the Chief Scientist at nChain?</h5>",
         answers: {
-            a: "Satoshi Nakatmoto", b: "Craig Wright", c: "Jimmy Nguyen", d: "Unknown"
+            a: "Satoshi Nakamoto", b: "Craig Wright", c: "Jimmy Nguyen", d: "Unknown"
         },
         correctAnswer: "b"
     },
@@ -86,13 +86,14 @@ const Questions = [
     const resultsContainer = $(".results");
     const submitButton = $(".submit");
 
-$(document).ready(function() {
-
-    $(".hide").hide() // hides the submit button
-
     var incorrectAnswers = 0;
     var correctAnswers = 0;
+    var unchecked = 0;
 
+$(document).ready(function() {
+
+    $("#submit").hide() // hides the submit button
+    $("#retry").hide()
     $('.start').click(function(){// upon click of button, the Quizbegins.
         console.log("hello");
         startQuiz();
@@ -104,50 +105,61 @@ $(document).ready(function() {
 
     function startQuiz(){
         
-        //clockRun();
+        clockRun();
+        $("#correct").html("")
+        $("#incorrect").html("")
 
         $("h4").hide();
         $(".start").hide(); // hides the start button
-        $(".hide").show(); // shows the submit button
+        $("#submit").show(); // shows the submit button
+        $("#questions").show()
 
         for (var i = 0; i < Questions.length; i++) {//iterates through Questions(10)
             
-            var questioncontainer = $("<p>") //variable testing assigned a paragraph.
+            var questioncontainer = $("<p>") //variable questioncontainer assigned a paragraph.
             questioncontainer.html(Questions[i].question)//html of the question is being looped with the question. a paragraph is added to each because of testing
             
             var fieldset = $('<fieldset id='+ i + '>')
             questioncontainer.append(fieldset)
-            
 
             for (var letter in Questions[i].answers) {
-               //console.log(Questions[i].answers[letter])
-                //console.log(letter)
-                fieldset.append('<input type="radio" name='+ i +' class="radio" value="'+ letter +'">'+ Questions[i].answers[letter] + " ")
-               // var userinput = $('input[type="radio"]:checked').val();
-            //console.log(userinput)
+             
+                fieldset.append('<input type="radio" name=' + i + ' value="'+ letter +'">'+ Questions[i].answers[letter] + " ")//previously had class="radio"
+               
               }
 
-              
+            questioncontainer.append('</fieldset>')
 
-             
-             questioncontainer.append('</fieldset>')
-             
             $("#questions").append(questioncontainer);
+
         }
-        $(document).on("click", "input:radio", function(){
-            var selected_value = $(this).val();
-            console.log(selected_value)//selected_value needs to be compared to the correct answer. Then if they are ===, increment correctf
-           
+        $('#submit').click(function(){
+            for (var i = 0; i < Questions.length; i++){
+                var selected_value = $('input[name=' + i + ']:checked').val();
+                //console.log(selected_value)
+                console.log(Questions[i].correctAnswer)
+                if (Questions[i].correctAnswer === selected_value) {
+                    correctAnswers++;
+
+                }else if (Questions[i].correctAnswer != selected_value && "input:radio(:checked)"){
+                    incorrectAnswers++;
+                }   else if ("input:radio:not(:checked)") {
+                    unchecked++;
+                } 
+                $("#correct").html("Correct Answers: " + correctAnswers)
+                $("#incorrect").html("Incorrect Answers: " + incorrectAnswers)
+                $("#unchecked").html("Unchecked Answers: " + unchecked)
+                
+                $("#submit").hide()
+                $("#questions").hide()
+                $(".start").show()
+            }
+            correctAnswers = 0
+            incorrectAnswers = 0
         })
         
     }
     
-    // onclick using Radio - Capture the keys for the user answer
-    // compare the user key with the correct answer
-    // if they === increment correct variable (incorrect and correct answers)
-    function showResults(){
-
-    }
 
     function clockRun() {
       intervalId = setInterval(decrement, 1000);
@@ -159,11 +171,12 @@ $(document).ready(function() {
   
         $("#timer").html("<h2>" + clock + "</h2>");
   
-        // if (number === 0) {
+         if (number === 0) {
   
         //   stop();
   
         //   alert("Time Up!");
+        }
     }
       
 })
